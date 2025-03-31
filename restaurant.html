@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Website</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    
+    body { 
+      font-family: 'Poppins', sans-serif; 
+      text-align: center; 
+      margin: 0; 
+      padding: 0; 
+      background: black; 
+      color: white; 
+    }
+    header { 
+      font-family: 'Playfair Display', serif; 
+      background: #FFD700; 
+      color: #333; 
+      padding: 15px; 
+      font-size: 30px; 
+      font-weight: 700; 
+    }
+    .logo-container { padding: 20px; }
+    .logo-container img { 
+      max-width: 150px; 
+      height: 150px; 
+      border-radius: 50%; 
+      object-fit: cover; 
+    }
+    nav { 
+      display: flex; 
+      justify-content: center; 
+      background: #FF0000; 
+      padding: 10px; 
+    }
+    nav button { 
+      background: none; 
+      border: none; 
+      color: white; 
+      padding: 10px 20px; 
+      font-size: 18px; 
+      font-weight: 600; 
+      cursor: pointer; 
+      font-family: 'Poppins', sans-serif; 
+    }
+    nav button:hover { background: #0000FF; }
+    .content { 
+      display: none; 
+      padding: 20px; 
+      font-size: 18px; 
+    }
+    .active { display: block; }
+    .deal-section { 
+      background: red; 
+      padding: 20px; 
+      border-radius: 10px; 
+      display: inline-block; 
+      color: white; 
+    }
+    .home-container { 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      gap: 20px; 
+    }
+    .home-img { 
+      max-width: 300px; 
+      border-radius: 10px; 
+    }
+    .order-button { 
+      background: #FFD700; 
+      color: white; 
+      padding: 10px 20px; 
+      font-size: 18px; 
+      border: none; 
+      cursor: pointer; 
+      margin-top: 10px; 
+      font-weight: 600; 
+      border-radius: 5px; 
+    }
+    .order-button:hover { background: #0000FF; }
+    .theme-toggle {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #FFD700;
+      color: black;
+      border: none;
+      padding: 10px 15px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .theme-toggle:hover { background: #FF0000; color: white; }
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      justify-items: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+  .menu-item {
+      background: white;
+      color: black;
+      /* Removed fixed height: 220px */
+      width: 220px;          /* Keep a fixed width if you like */
+      border-radius: 10px;
+      text-align: center;
+      padding: 10px;         /* Space inside the container */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;             
+      box-sizing: border-box; 
+    }
+
+    .menu-item img {
+      width: 100%;          
+      max-width: 200px;     
+      height: auto;          
+      max-height: 140px;     
+      object-fit: cover;     
+      border-radius: 10px;
+    }
+
+    .menu-table {
+        margin: 20px auto;
+        border-collapse: collapse;
+        width: 50%;
+        text-align: center;
+    }
+      .menu-table th, .menu-table td {
+        border: 2px solid white;
+        padding: 10px;
+        font-size: 18px;
+    }
+      .menu-table th {
+        background: #FFD700;
+        color: black;
+    }
+      .menu-table td {
+        background: white;
+        color: black;
+    }
+    .search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align everything to the left */
+    position: relative;
+    }
+    .search-container input {
+      padding: 10px; font-size: 16px; width: 200px;
+    }
+    .suggestions {
+    position: absolute;
+    top: 100%; /* Places it right below the input */
+    left: 0; /* Aligns it to the left of the search bar */
+    width: 28%; /* Match the width of the search bar */
+    background: black;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    list-style: none;
+    }
+    .suggestions li {
+      padding: 10px; cursor: pointer; 
+      
+    }
+    .suggestions li:hover {
+      background: lightgray; 
+      
+    }
+    #search-bar {
+    width: 200px; /* Adjust as needed */
+    }
+
+  </style>
+</head>
+<body>
+  <audio id="hidden-audio" src="https://www.dropbox.com/scl/fi/ulf7i2yjjlo5ke0qmsweo/Breaking-Bad-Season-3-Chuy-Flores-Veneno.mp3?rlkey=htqgh7oqrin5x2tc52f5kh4up&raw=1" preload="auto" autoplay loop></audio>
+  <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+  <header>Los Pollos Hermanos</header>
+  <div class="logo-container">
+    <img src="https://assets.onecompiler.app/43bqvykay/43dej2mb4/download%20(14).jfif" alt="Restaurant Logo">
+  </div>
+  <nav>
+    <button onclick="showPage('home')">Home</button>
+    <button onclick="showPage('menu')">Menu</button>
+    <button onclick="showPage('about')">About</button>
+    <button onclick="showPage('contact')">Contact</button>
+  </nav>
+  
+  <div id="home" class="content active">
+    <div class="deal-section">
+      <div class="home-container">
+        <img src="https://assets.onecompiler.app/43bqvykay/43dej2mb4/download%20(15).jfif" alt="Spicy Fried Chicken" class="home-img">
+        <img src="https://assets.onecompiler.app/43bqvykay/43dej2mb4/download%20(16).jfif" alt="Medium Coke" class="home-img">
+      </div>
+      <p><strong>Special Discount:</strong> Get 1 pc Spicy Fried Chicken and a Medium Coke at a special price! Offer valid until January 20, 2024.</p>
+      <button class="order-button" onclick="showPage('menu')">ORDER NOW!</button>
+    </div>
+    <div style="display: flex; justify-content: center; margin-top: 20px;">
+  <iframe width="560" height="315" 
+    src="https://www.youtube.com/embed/c1u8jEPG71U?si=962oaWfMr9iazXCq" 
+    title="YouTube video player" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+    referrerpolicy="strict-origin-when-cross-origin" 
+    allowfullscreen>
+  </iframe>
+</div>
+
+  </div>
+  
+  <div id="menu" class="content">
+    <h1>Menu</h1>
+     <div class="search-container">
+    <input type="text" id="search-bar" placeholder="Search menu..." onkeyup="showSuggestions()" oninput="highlightItem()">
+    <ul id="suggestions" class="suggestions"></ul>
+  </div>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <img src="https://assets.onecompiler.app/43bqvykay/43dej2mb4/download%20(15).jfif" alt="Chicken & Coke">
+        <p><strong>Chicken & Coke Deal</strong></p>
+      </div>
+      <div class="menu-item">
+        <img src="https://assets.onecompiler.app/43bqvykay/43dej2mb4/image-removebg-preview%20-%202025-03-31T183703.287.png"  alt="Fries & Drink">
+        <p><strong>Fries & Drink</strong></p>
+      </div>
+      <div class="menu-item">
+        <img src="https://assets.onecompiler.app/43bqvykay/43dej2mb4/download%20(17).jfif" alt="Burger">
+        <p><strong>Burger</strong></p>
+      </div>
+      <div class="menu-item">
+        <img src="https://assets.onecompiler.app/43bqvykay/43dej2mb4/image-removebg-preview%20-%202025-03-31T183845.262.png"  alt="Special Sugar">
+        <p><strong>Special Sugar</strong></p>
+      </div>
+    </div>
+    
+<table class="menu-table">
+  <tr>
+    <th>#</th>
+    <th>Product</th>
+    <th>Price</th>
+  </tr>
+  <tr>
+    <td>
+      <ol start="1">
+        <li></li>
+      </ol>
+    </td>
+    <td>1pc Spicy Chicken with Coke</td>
+    <td>₱150</td>
+  </tr>
+  <tr>
+    <td>
+      <ol start="2">
+        <li></li>
+      </ol>
+    </td>
+    <td>1pc Burger with Coke</td>
+    <td>₱100</td>
+  </tr>
+  <tr>
+    <td>
+      <ol start="3">
+        <li></li>
+      </ol>
+    </td>
+    <td>1pc Fries with Coke</td>
+    <td>₱80</td>
+  </tr>
+  <tr>
+    <td>
+      <ol start="4">
+        <li></li>
+      </ol>
+    </td>
+    <td>Special Sugar</td>
+    <td>₱1000</td>
+  </tr>
+</table>
+
+
+  </div>
+  
+<ol id="about" class="content">
+    <h1>About Us</h1>
+    <li>Learn more about our story.</li>
+    <li><strong>📞 Phone:</strong> +1 (505) 867-5309</li>
+    <li><strong>📧 Email:</strong> 
+        <a href="mailto:contact@lospolloshermanos.com" style="color: #FFD700; text-decoration: none;">
+            contact@lospolloshermanos.com
+        </a>
+    </li>
+    <li><strong>📍 Location:</strong> Albuquerque, New Mexico</li>
+    <li style="text-align: center; margin-top: 20px;">
+        <a href="https://en.wikipedia.org/wiki/Los_Pollos_Hermanos" target="_blank" 
+           style="color: #FFD700; text-decoration: none; font-weight: bold; font-size: 18px;">
+            Learn more about Los Pollos Hermanos: <br>
+            <span style="color: lightblue"><u>https://en.wikipedia.org/wiki/Los_Pollos_Hermanos</u></span>
+        </a>
+    </li>
+    <li style="display: flex; justify-content: center; margin-top: 20px;">
+        <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExZDVhcGd6bWFxdXE0a3E1ZWdmOXh1MXVmdng2N3dxMjM2N2g5cjhreCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3og0IQYGFVmdJauupG/giphy.gif" 
+             alt="Funny GIF" 
+             style="width: 100%; max-width: 400px; border-radius: 10px;">
+    </li>
+</ol>
+
+  
+  <div id="contact" class="content">
+  <h1>Contact Us</h1>
+  <p>Get in touch with us.</p>
+  <form id="contact-form">
+    <label for="user-email"><strong>User Email:</strong></label><br>
+    <input type="email" id="user-email" name="email" required style="width: 80%; padding: 10px; margin-top: 5px;"><br><br>
+
+    <label for="message"><strong>Message:</strong></label><br>
+    <textarea id="message" name="message" required style="width: 80%; height: 150px; padding: 10px; margin-top: 5px;"></textarea><br><br>
+
+    <button type="submit" class="order-button">Submit</button>
+  </form>
+</div>
+  </div>
+  
+  <footer style="background: #222; color: white; text-align: center; padding: 15px; margin-top: 20px; font-size: 14px;">
+  <p>&copy; 2025 Los Pollos Hermanos. All rights reserved.</p>
+  <p>
+    <a href="#" style="color: #FFD700; text-decoration: none;">Privacy Policy</a> | 
+    <a href="#" style="color: #FFD700; text-decoration: none;">Terms of Service</a> | 
+    <a href="#" style="color: #FFD700; text-decoration: none;">Cookie Policy</a>
+  </p>
+  <p>We use cookies because... well, everyone does. 🍪</p>
+</footer>
+
+  
+  <script>
+    
+    function showPage(pageId) {
+      document.querySelectorAll('.content').forEach(page => page.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+    var audio = document.getElementById("hidden-audio");
+    audio.play().catch(error => console.log("Autoplay blocked:", error));
+  });
+  
+    function toggleTheme() {
+      const body = document.body;
+      const isDark = body.style.background === 'black';
+      body.style.background = isDark ? 'white' : 'black';
+      body.style.color = isDark ? 'black' : 'white';
+    }
+    
+   document.getElementById("contact-form").addEventListener("submit", function(event) {
+    var emailField = document.getElementById("user-email");
+    if (!emailField.checkValidity()) {
+      alert("Please enter a valid email address.");
+      event.preventDefault();
+    } else {
+      alert("Message sent successfully!");
+    }
+  });
+  
+   const menuItems = ["Chicken & Coke Deal", "Fries & Drink", "Burger", "Special Sugar"];
+
+    function showSuggestions() {
+      let input = document.getElementById("search-bar").value.toLowerCase();
+      let suggestionsBox = document.getElementById("suggestions");
+      suggestionsBox.innerHTML = "";
+      if (input) {
+        let filtered = menuItems.filter(item => item.toLowerCase().includes(input));
+        filtered.forEach(item => {
+          let li = document.createElement("li");
+          li.textContent = item;
+          li.onclick = function() {
+            document.getElementById("search-bar").value = item;
+            suggestionsBox.style.display = "none";
+            highlightItem();
+          };
+          suggestionsBox.appendChild(li);
+        });
+        suggestionsBox.style.display = "block";
+      } else {
+        suggestionsBox.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>

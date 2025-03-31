@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Los Pollos Hermanos</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: black;
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    .login-container {
+      width: 300px;
+      margin: 100px auto;
+      padding: 20px;
+      background: #FFD700;
+      color: black;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .login-button {
+      background: #FF0000;
+      color: white;
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      border-radius: 5px;
+    }
+    .login-button:hover {
+      background: #0000FF;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Username" required><br>
+    <input type="password" id="password" placeholder="Password" required><br>
+    <button class="login-button" onclick="validateLogin()">Login</button>
+  </div>
+
+  <script>
+    function validateLogin() {
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+      
+      if (username === "admin" && password === "password123") {
+        alert("Login successful!");
+        window.location.href = "index.html";
+      } else {
+        alert("Invalid username or password. Please try again.");
+      }
+    }
+  </script>
+</body>
+</html>
